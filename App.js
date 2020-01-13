@@ -1,7 +1,8 @@
+import React from 'react'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import HomeScreen from './src/screens/HomeScreen';
 import ComponentScreen from './src/screens/ComponentScreen'
-import ListScreen from './src/screens/ListScreen'
+import ListScreen from './src/screens/ListScreen' 
 import ImageScreen from './src/screens/ImageScreen'
 import CounterScreen from './src/screens/CounterScreen'
 import ColorScreen from './src/screens/ColorScreen'
@@ -9,6 +10,9 @@ import SquareScreen from './src/screens/SquareScreen'
 import ColorCounter from './src/Components/ColorCounter'
 import TextScreen from './src/screens/TextScreen'
 import BoxScreen from './src/screens/BoxScreen'
+import SearchScreen from './src/screens/SearchScreen';
+import IndexScreen from './src/screens/IndexScreen';
+import { BlogProvider } from './src/context/BlogContext'
 
 const navigator = createStackNavigator(
   {
@@ -21,15 +25,25 @@ const navigator = createStackNavigator(
     Square: SquareScreen,
     ColorCounter: ColorCounter,
     TextScreen: TextScreen,
-    Box: BoxScreen
+    Box: BoxScreen,
+    Search: SearchScreen,
+    Index: IndexScreen,
     // Color: ColorScreen
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Index',
     defaultNavigationOptions: {
       title: 'App'
     }
   }
 );
 
-export default createAppContainer(navigator);
+// export default createAppContainer(navigator);
+const App = createAppContainer(navigator);
+export default () => {
+  return <BlogProvider>
+        <App />
+     </BlogProvider>
+};
+
+
