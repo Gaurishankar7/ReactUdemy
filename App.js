@@ -12,7 +12,7 @@ import TextScreen from './src/screens/TextScreen'
 import BoxScreen from './src/screens/BoxScreen'
 import SearchScreen from './src/screens/SearchScreen';
 import IndexScreen from './src/screens/IndexScreen';
-import { BlogProvider } from './src/context/BlogContext'
+import { Provider  } from './src/context/BlogContext'
 
 const navigator = createStackNavigator(
   {
@@ -37,13 +37,15 @@ const navigator = createStackNavigator(
     }
   }
 );
-
 // export default createAppContainer(navigator);
 const App = createAppContainer(navigator);
 export default () => {
-  return <BlogProvider>
-        <App />
-     </BlogProvider>
+  return (
+    <Provider>
+          <App />
+      </Provider>
+  );
+
 };
 
 
