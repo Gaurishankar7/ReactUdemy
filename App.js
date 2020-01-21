@@ -13,6 +13,7 @@ import BoxScreen from './src/screens/BoxScreen'
 import SearchScreen from './src/screens/SearchScreen';
 import IndexScreen from './src/screens/IndexScreen';
 import { Provider  } from './src/context/BlogContext'
+import ShowScreen from './src/screens/ShowScreen'
 
 const navigator = createStackNavigator(
   {
@@ -28,6 +29,7 @@ const navigator = createStackNavigator(
     Box: BoxScreen,
     Search: SearchScreen,
     Index: IndexScreen,
+    Show: ShowScreen,
     // Color: ColorScreen
   },
   {
