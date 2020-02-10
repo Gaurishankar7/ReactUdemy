@@ -1,5 +1,6 @@
 import React, {useReducer} from 'react'
 import CreateDataContext from './CreateDataContext'
+import Axios from 'axios';
 
 const BlogContext = React.createContext();
 
@@ -8,15 +9,21 @@ const blogReducer= (state, action) => {
         case 'delete_blogpost':
             return state.filter(blogPost => blogPost.id !== action.payload);
         case 'add_blogpost':
-            return [...state, { id: Math.floor(Math.random() * 9999), title: `Blog Post #${state.length + 1}`}];
+            return [...state, { 
+                id: Math.floor(Math.random() * 9999),
+                 title: action.payload.title,
+                content: action.payload.content
+            }];
             default:
                 return state;
     }
 };
 
 const addBlogPost = (dispatch) => {
-    return () => {
-        dispatch({ type: 'add_blogpost'});
+    return  (title, content, callback) => {
+        // await axios.post('asdasds', title,content)
+        dispatch({ type: 'add_blogpost', payload: {title, content} });
+        callback();
     };
     
 };
@@ -56,5 +63,5 @@ const deleteBlogPost = dispatch => {
 export const {Context, Provider} = CreateDataContext(
     blogReducer,
     { addBlogPost, deleteBlogPost },
-    []
+    [{ title: 'TEST POST', content: 'Test Content', id: 1}]
 );
