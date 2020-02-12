@@ -1,31 +1,38 @@
-import React, {useReducer} from 'react'
+import React, { useReducer } from 'react'
 import CreateDataContext from './CreateDataContext'
 import Axios from 'axios';
 
 const BlogContext = React.createContext();
 
-const blogReducer= (state, action) => {
-    switch(action.type){
+const blogReducer = (state, action) => {
+    switch (action.type) {
+        case 'edit_blogpost':
+            return state.map(blogPost => {
+                 return blogPost.id === action.payload.id ? action.payload : blogPost;
+            });
         case 'delete_blogpost':
             return state.filter(blogPost => blogPost.id !== action.payload);
         case 'add_blogpost':
-            return [...state, { 
+            return [...state, {
                 id: Math.floor(Math.random() * 9999),
-                 title: action.payload.title,
+                title: action.payload.title,
                 content: action.payload.content
             }];
-            default:
-                return state;
+        default:
+            return state;
     }
 };
 
 const addBlogPost = (dispatch) => {
-    return  (title, content, callback) => {
+    return (title, content, callback) => {
         // await axios.post('asdasds', title,content)
-        dispatch({ type: 'add_blogpost', payload: {title, content} });
-        callback();
+        dispatch({ type: 'add_blogpost', payload: { title, content } });
+        if (callback) {
+            callback();
+        }
+        // callback();
     };
-    
+
 };
 
 // 
@@ -55,13 +62,25 @@ const addBlogPost = (dispatch) => {
 
 const deleteBlogPost = dispatch => {
     return (id) => {
-        dispatch({type: 'delete_blogpost', payload: id })
+        dispatch({ type: 'delete_blogpost', payload: id })
     };
 }
 
+const editBlogPost = dispatch => {
+    return (id, title, content, callback) => {
+        dispatch({
+            type: 'edit_blogpost',
+            payload: { id, title, content }
+        });
+        if (callback) {
+            callback();
+        }
+        //  callback(); 
+    };
+}
 
-export const {Context, Provider} = CreateDataContext(
+export const { Context, Provider } = CreateDataContext(
     blogReducer,
-    { addBlogPost, deleteBlogPost },
-    [{ title: 'TEST POST', content: 'Test Content', id: 1}]
+    { addBlogPost, deleteBlogPost, editBlogPost },
+    [{ title: 'TEST POST', content: 'Test Content', id: 1 }]
 );
